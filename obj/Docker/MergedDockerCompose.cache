@@ -1,0 +1,25 @@
+services:
+  db:
+    container_name: database
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: DB_Password
+    image: mcr.microsoft.com/mssql/server
+  demoapp:
+    build:
+      context: C:\Users\prsangli\source\repos\DemoApp
+      dockerfile: DemoApp/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: demoapp
+    ports:
+    - target: 80
+    - target: 443
+    volumes:
+    - C:\Users\prsangli\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\prsangli\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+  redis:
+    container_name: redis
+    image: redis:latest
+version: '3.4'

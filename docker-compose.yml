@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  demoapp:
+    image: ${DOCKER_REGISTRY-}demoapp
+    build:
+      context: .
+      dockerfile: DemoApp/Dockerfile
+  redis:
+    image: redis:latest
+    container_name: redis
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: database
+    environment:
+        SA_PASSWORD: "DB_Password"
+        ACCEPT_EULA: "Y"
